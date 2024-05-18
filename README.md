@@ -1,4 +1,4 @@
-# AI Site Symmarizer
+# AI Site Summarizer
 This web app summarizes the content of the URL provided by the user. 
 A Screenshot of the app interface is provided below:
 
