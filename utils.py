@@ -2,7 +2,6 @@ from typing import AsyncIterator, Iterator
 from langchain_core.document_loaders import BaseLoader
 from langchain_core.documents import Document
 import validators
-import requests
 import os
 from dotenv import load_dotenv
 
@@ -11,21 +10,19 @@ load_dotenv()
 
 
 fireworks_api_key = os.environ['FIREWORKS_API_KEY']
-try:
-    MODEL_ID = "accounts/fireworks/models/mixtral-8x7b-instruct"
-    
-    llm = ChatFireworks(
-        model=MODEL_ID,
-        model_kwargs={
-            "temperature": 0.7,
-            "max_tokens": 2048,
-            "top_p": 1,
-        },
-        cache=False,
-    )
-except requests.exceptions.ConnectionError as e:
-    # Handle the connection error
-    print("Check your internet connection")
+
+MODEL_ID = "accounts/fireworks/models/mixtral-8x7b-instruct"
+
+llm = ChatFireworks(
+    model=MODEL_ID,
+    model_kwargs={
+        "temperature": 0.7,
+        "max_tokens": 2048,
+        "top_p": 1,
+    },
+    cache=False,
+)
+
 
 class CustomDocumentLoader(BaseLoader):
     """An example document loader that reads a file line by line."""
@@ -83,12 +80,7 @@ def check_valid_url(url):
     Returns:
         bool: True if the input is a valid URL, False otherwise.
     """
-    try:
-        if validators.url(url):
-            return True
-        else:
-            raise ValueError("Invalid URL")
-    except requests.exceptions.ConnectionError as e:
-    # Handle the connection error
-        print("Check your internet connection")
-    
+    if validators.url(url):
+        return True
+    else:
+        raise ValueError("Invalid URL")

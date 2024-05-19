@@ -3,7 +3,6 @@ from scraper import scrape_website, can_fetch_url  # Import your scraping functi
 from langchain.chains.summarize import load_summarize_chain
 from summarizer import summarize
 from utils import check_valid_url
-from headline import headline
 import httpx
 
 
@@ -32,8 +31,6 @@ def main():
                                     f.write(content)
 
                                 summary = summarize()
-                                summary_headline = headline(summary=summary)
-                                st.markdown("***" + summary_headline + "***")
                                 st.write(summary)
 
                                 #deleting the contents of the files because i've noticed that "scraped_content error" is raised if the same site is scraped consecutively
